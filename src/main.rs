@@ -10,7 +10,13 @@ mod transcriptparser;
 //     println!("{}", std::any::type_name::<T>())
 // }
 
-
+struct PageSettings {
+    pub margin_left_x: f32, // 112.0 points
+    // pub margin_right_x: f32,
+    pub indent_left_postition_x: f32, // 200.0 points
+    pub margin_bottom_y: f32, // 27.0 points
+    pub margin_top_y: f32,
+}
 
 
 fn main() -> Result<(), Error> {
@@ -26,9 +32,12 @@ fn main() -> Result<(), Error> {
     println!("read: {}", path);
 
 
+    const MARGIN_X_LEFT: f32 = 112.0;
+    const INDENT_X_LEFT: f32 = 200.0;
+
     let pdf = File::<Vec<u8>>::open(&path).unwrap();
 
-    let ret = transcriptparser::parse_pdf_transcript(pdf)
+    let ret = transcriptparser::parse_pdf_transcript(pdf);
    
 
     Ok(())

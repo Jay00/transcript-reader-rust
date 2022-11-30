@@ -143,7 +143,7 @@ fn text_objects(operations: &[Operation]) -> impl Iterator<Item = TextObject<'_>
 }
 
 
-fn parse_text_objects_on_page(page: &Page) -> Result<Vec<Line>, Error> {
+fn parse_text_objects_on_page(page: &Page, page_num: usize) -> Result<Vec<Line>, Error> {
 
     let content = match &page.contents {
         Some(c) => c,
@@ -276,7 +276,7 @@ pub fn parse_pdf_transcript(pdf: File<Vec<u8>>) -> Result<(), Error> {
     for (i, page) in pdf.pages().enumerate(){
         // println!("Processing page: {}", i);
         let page = page?;
-        let lines_on_page = parse_text_objects_on_page(&page)
+        let lines_on_page = parse_text_objects_on_page(&page, i)
         .with_context(|| format!("Unable to parse the members on page {}", i + 1))?;
 
         for l in lines_on_page {
