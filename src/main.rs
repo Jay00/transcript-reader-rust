@@ -188,11 +188,6 @@ where
 
 
 
-// #[derive(Debug)]
-// pub struct ContactList {
-//     pub members: Vec<MemberInfo>,
-// }
-
 
 #[derive(Debug)]
 pub struct Line {
@@ -212,14 +207,12 @@ fn parse_text_objects_on_page(page: &Page) -> Result<Vec<Line>, Error> {
 
     let mut text_objects = text_objects(&content.operations).collect::<Vec<TextObject>>();
    
+    // Sort all text objects from top to bottom and then from left to right
     text_objects.sort_by(
         |a, b| 
         b.y.partial_cmp(&a.y).unwrap_or(std::cmp::Ordering::Equal)
     .then(a.x.partial_cmp(&b.x).unwrap_or(std::cmp::Ordering::Equal)));
-    // text_objects.sort_by(|a, b| b.x.partial_cmp(&a.x).unwrap());
-    // text_objects.sort_by_key(|v| (v.y, v.x));
-    // floats.sort_by(|a, b| a.partial_cmp(b).unwrap_or(Equal));
-
+   
     println!("Finished - Get text objects");
     // println!("Text Objects: {:?}", text_objects)
 
